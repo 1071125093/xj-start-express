@@ -2,7 +2,7 @@
  * @Author: XiaoJun
  * @Date: 2022-12-02 15:53:33
  * @LastEditors: XiaoJun
- * @LastEditTime: 2022-12-02 17:29:32
+ * @LastEditTime: 2022-12-05 21:09:46
  * @Description: database
  * @FilePath: /xj-start-express/db/index.js
  */
@@ -20,21 +20,21 @@ module.exports = {
 			bigNumberStrings: true
 		})
 		console.log('数据库连接成功')
-		pool.querySync = sql => {
-			return new Promise((resolve, reject) => {
-				pool.query(sql, (err, results, fields) => {
-					if (err) {
-						console.error(err)
-						reject(err)
-					}
-					resolve({
-						err,
-						results,
-						fields
-					})
+	},
+	querySync(sql, paramsArr) {
+		return new Promise((resolve, reject) => {
+			paramsArr = paramsArr?.length ? paramsArr : [paramsArr]
+			pool.query(sql, [...paramsArr], (err, results, fields) => {
+				if (err) {
+					reject(err)
+				}
+				resolve({
+					err,
+					results,
+					fields
 				})
 			})
-		}
+		})
 	},
 	/** 获取数据池 */
 	getPool() {

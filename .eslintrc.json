@@ -5,8 +5,8 @@
 		"es6": true
 	},
 	"parserOptions": {
-		"ecmaVersion": 2020, // 指定js版本
-		"sourceType": "module" // 默认为script，使用es6 module设置为module
+		"ecmaVersion": 2020 // 指定js版本
+		// "sourceType": "module" // 默认为script，使用es6 module设置为module
 	},
 	"extends": [
 		// 集成的代码规范
