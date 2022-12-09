@@ -2,7 +2,7 @@
  * @Author: XiaoJun
  * @Date: 2022-12-02 13:54:52
  * @LastEditors: XiaoJun
- * @LastEditTime: 2022-12-06 15:30:40
+ * @LastEditTime: 2022-12-07 13:15:30
  * @Description: 组件功能
  * @FilePath: /xj-start-express/app.js
  */
@@ -37,6 +37,7 @@ createPool()
 app.use('/user', require('./api/user/index'))
 app.use('/userInfo', require('./api/userInfo/index'))
 app.use('/articleCate', require('./api/articleCate/index'))
+app.use('/fsExtra', require('./api/fsExtra/index'))
 // #endregion ******* 路由等的引入 ~end~ **************/
 
 // #region ********** 自定义全局中间件 start **************/
