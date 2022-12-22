@@ -2,7 +2,7 @@
  * @Author: XiaoJun
  * @Date: 2022-12-07 13:15:37
  * @LastEditors: XiaoJun
- * @LastEditTime: 2022-12-07 19:40:43
+ * @LastEditTime: 2022-12-21 18:30:10
  * @Description: 简易demo 不做service层
  *
  * https://juejin.cn/post/6844903641594216455
@@ -14,8 +14,9 @@ const router = express.Router()
 const path = require('path')
 const fs = require('fs-extra')
 const { getMyDist } = require('../../config')
-
+const uploadService = require('./uploadService')
 const SHARD_DIST = '/fsExtra'
+
 /** 文件内容复制 */
 router.post('/copy', async (req, res) => {
 	let baseDist = getMyDist([SHARD_DIST, '/copy/source.txt'])
@@ -238,6 +239,7 @@ router.post('/readdir', async (req, res) => {
  */
 router.post('/stat', async (req, res) => {
 	let targetFile = getMyDist([SHARD_DIST, '/readdir'])
+	debugger
 	// let targetFile = getMyDist([SHARD_DIST, '/readdir/test1.txt'])
 	const results = await fs.stat(targetFile)
 	res.send({
@@ -252,13 +254,32 @@ router.post('/stat', async (req, res) => {
 router.post('/open', async (req, res) => {
 	let targetFile = getMyDist([SHARD_DIST, '/open/test1.txt'])
 	const results = await fs.open(targetFile)
-  debugger
 	res.send({
 		code: 200,
 		message: '文件打开成功',
 		data: results
 	})
 })
+// #region ********** 文件上传相关 start **************/
+
+/** 打开文件
+ */
+router.post(
+	'/uploadFile',
+	uploadService.uploadConfig.single('file'),
+	(req, res) => {
+		uploadService.handleUploadFile(req, res)
+	}
+)
+// #endregion ******* 文件上传相关 ~end~ **************/
+
+// #region ********** 文件查询 start **************/
+/** 打开文件
+ */
+router.post('/downloadFile', async (req, res) => {
+	uploadService.handleDownloadFile(req, res)
+})
+// #endregion ******* 文件查询 ~end~ **************/
 
 // more 自己领悟
 
